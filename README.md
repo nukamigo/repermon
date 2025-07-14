@@ -46,3 +46,10 @@ The system is composed of three primary, interconnected components that work tog
 4. **Automated Analysis:** Once a week, the **CronJob** queries **Elasticsearch** for trends.
 
 5. **Intelligent Reporting:** The **CronJob** sends the trends to an **LLM**, which generates a clear, concise performance report, identifying key successes and bottlenecks.
+
+### Pre-commit
+To run the pre-commit you need to run the command below:
+
+```bash
+pre-commit run --all-files
+```
