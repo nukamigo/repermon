@@ -47,7 +47,7 @@ The system is composed of three primary, interconnected components that work tog
 
 5. **Intelligent Reporting:** The **CronJob** sends the trends to an **LLM**, which generates a clear, concise performance report, identifying key successes and bottlenecks.
 
-### Pre-commit
+### How to run pre-commit
 To run the pre-commit you need to run the command below:
 
 ```bash
