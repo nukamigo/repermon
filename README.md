@@ -53,3 +53,5 @@ To run the pre-commit you need to run the command below:
 ```bash
 pre-commit run --all-files
 ```
+
+Then it will run a sequence of linters before you create your commit.
