@@ -53,5 +53,3 @@ To run the pre-commit you need to run the command below:
 ```bash
 pre-commit run --all-files
 ```
-
-Then it will run a list of linters in all files before you create your commit, like trailing whitespaces, ruff, etc.
