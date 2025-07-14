@@ -9,3 +9,9 @@ dependencies = [
   "pathspec==0.12.1",
   "typing-extensions==4.14.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+    "ruff>=0.12.3",
+]
