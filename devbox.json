@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.0/.schema/devbox.schema.json",
+  "packages": [
+    "github:dagger/nix/7765e3fc447077d6ad200df1cd40ec171f16af91#packages.x86_64-linux.dagger",
+    "uv@0.7.19",
+    "k9s@0.50.6",
+    "gh@2.74",
+    "jq@1.7.1",
+  ],
+  "shell": {
+    "init_hook": [
+      "uv sync",
+      "source .venv/bin/activate",
+    ],
+  }
+}
