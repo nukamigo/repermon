@@ -11,11 +11,8 @@
     "init_hook": [
       "uv sync --project aiops --active",
       "source .venv/bin/activate",
-      "alias pch='devbox run pch'",
+      "alias pch='pre-commit run --all-files'",
     ],
-    "scripts": {
-      "pch": "pre-commit run --all-files"
-    },
   },
 
 }
