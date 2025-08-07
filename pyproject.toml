@@ -1,13 +1,16 @@
 [project]
-name = "aiops"
+name = "repermon"
 version = "0.1.0"
-description = "Add your description here"
+description = "AIOps CI/CD Performance Operator"
 requires-python = ">=3.12"
 dependencies = [
   "mypy==1.16.1",
   "mypy-extensions==1.1.0",
   "pathspec==0.12.1",
   "typing-extensions==4.14.1",
+  "kopf==1.38.0",
+  "requests==2.32.4",
+  "elasticsearch==9.1.0"
 ]
 
 [dependency-groups]
