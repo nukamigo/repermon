@@ -1,0 +1,14 @@
+{
+  "name": "local-dev",
+  "engineVersion": "v0.18.14",
+  "sdk": {
+    "source": "python"
+  },
+  "dependencies": [
+    {
+      "name": "proxy",
+      "source": "github.com/kpenfound/dagger-modules/proxy@proxy/v0.2.5",
+      "pin": "3e9129a119151eb122e5fe380bd2d4313d8fc001"
+    }
+  ]
+}

@@ -10,7 +10,9 @@ dependencies = [
   "typing-extensions==4.14.1",
   "kopf==1.38.0",
   "requests==2.32.4",
-  "elasticsearch==9.1.0"
+  "elasticsearch==9.1.0",
+  "dagger-io"
+
 ]
 
 [dependency-groups]
