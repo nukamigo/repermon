@@ -1,13 +1,12 @@
-from typing import Annotated
 import dagger
-from dagger import DefaultPath, dag, function, object_type
+from dagger import dag, function, object_type
 
 
 @object_type
 class LocalDev:
     @function
     def local_dev(
-            self,
+        self,
     ) -> dagger.Service:
         elasticsearch_service = (
             dag.container()
@@ -24,7 +23,9 @@ class LocalDev:
             .from_("docker.elastic.co/kibana/kibana:9.1.0")
             .with_exposed_port(5601)
             .with_service_binding("elasticsearch_service", elasticsearch_service)
-            .with_env_variable("ELASTICSEARCH_HOSTS", "http://elasticsearch_service:9200")
+            .with_env_variable(
+                "ELASTICSEARCH_HOSTS", "http://elasticsearch_service:9200"
+            )
             .as_service()
         )
         return (
