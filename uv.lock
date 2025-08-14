@@ -843,6 +843,7 @@ dependencies = [
     { name = "mypy" },
     { name = "mypy-extensions" },
     { name = "pathspec" },
+    { name = "pre-commit" },
     { name = "requests" },
     { name = "typing-extensions" },
 ]
@@ -861,6 +862,7 @@ requires-dist = [
     { name = "mypy", specifier = "==1.16.1" },
     { name = "mypy-extensions", specifier = "==1.1.0" },
     { name = "pathspec", specifier = "==0.12.1" },
+    { name = "pre-commit", specifier = ">=4.2.0" },
     { name = "requests", specifier = "==2.32.4" },
     { name = "typing-extensions", specifier = "==4.14.1" },
 ]

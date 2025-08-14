@@ -11,12 +11,17 @@ dependencies = [
   "kopf==1.38.0",
   "requests==2.32.4",
   "elasticsearch==9.1.0",
-  "dagger-io"
-
+  "dagger-io",
+  "pre-commit>=4.2.0",
 ]
 
 [dependency-groups]
 dev = [
     "pre-commit>=4.2.0",
     "ruff>=0.12.3",
+]
+
+[tool.uv.workspace]
+members = [
+    ".dagger",
 ]
