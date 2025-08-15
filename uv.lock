@@ -2,6 +2,12 @@ version = 1
 revision = 2
 requires-python = ">=3.12"
 
+[manifest]
+members = [
+    "build-ci",
+    "repermon",
+]
+
 [[package]]
 name = "aiohappyeyeballs"
 version = "2.6.1"
@@ -117,6 +123,17 @@ wheels = [
 ]
 
 [[package]]
+name = "build-ci"
+version = "0.1.0"
+source = { editable = ".dagger/build_ci" }
+dependencies = [
+    { name = "dagger-io" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "dagger-io", editable = ".dagger/build_ci/sdk" }]
+
+[[package]]
 name = "cattrs"
 version = "25.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -205,8 +222,7 @@ wheels = [
 
 [[package]]
 name = "dagger-io"
-version = "0.18.14"
-source = { registry = "https://pypi.org/simple" }
+source = { editable = ".dagger/build_ci/sdk" }
 dependencies = [
     { name = "anyio" },
     { name = "beartype" },
@@ -218,9 +234,32 @@ dependencies = [
     { name = "rich" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/38/d1/7b820d2af0742341ec8215b639afe0138514545323143d757c9d0830da71/dagger_io-0.18.14.tar.gz", hash = "sha256:60c9f493a0a9c8241852a9d491ccd71e54bf49dc8e9d839337c0cb55c08f9793", size = 92147, upload-time = "2025-07-18T23:03:24.59Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/00/54/dea5f999193812c46a43b1ad3b2fc92e8c7842be46c4e50a221b4103d1c2/dagger_io-0.18.14-py3-none-any.whl", hash = "sha256:1b2e532ad546779e85c3982054b39665a6dd7f872bcf8f1e6d3935f2dc973c0b", size = 88002, upload-time = "2025-07-18T23:03:23.225Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "anyio", specifier = ">=3.6.2" },
+    { name = "beartype", specifier = ">=0.18.2" },
+    { name = "cattrs", specifier = ">=25.1.0" },
+    { name = "gql", extras = ["httpx"], specifier = ">=3.5.0" },
+    { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.23.0" },
+    { name = "opentelemetry-sdk", specifier = ">=1.23.0" },
+    { name = "platformdirs", specifier = ">=2.6.2" },
+    { name = "rich", specifier = ">=10.11.0" },
+    { name = "typing-extensions", specifier = ">=4.13.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "aiohttp", specifier = ">=3.9.3" },
+    { name = "codegen", editable = ".dagger/build_ci/sdk/codegen" },
+    { name = "mypy", specifier = ">=1.8.0" },
+    { name = "pytest", specifier = ">=8.0.2" },
+    { name = "pytest-httpx", specifier = ">=0.30.0" },
+    { name = "pytest-mock", specifier = ">=3.12.0" },
+    { name = "pytest-subprocess", specifier = ">=1.5.0" },
+    { name = "ruff", specifier = ">=0.3.4" },
+    { name = "sphinx", specifier = ">=7.2.6" },
+    { name = "sphinx-rtd-theme", specifier = ">=2.0.0" },
 ]
 
 [[package]]

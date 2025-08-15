@@ -1,5 +1,5 @@
 {
-  "name": "build",
+  "name": "build_ci",
   "engineVersion": "v0.18.14",
   "sdk": {
     "source": "python"
@@ -18,5 +18,5 @@
       "source": ".dagger/local-dev"
     }
   ],
-  "source": ".dagger/build"
+  "source": ".dagger/build_ci"
 }

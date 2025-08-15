@@ -23,5 +23,5 @@ dev = [
 
 [tool.uv.workspace]
 members = [
-    ".dagger",
+    ".dagger/build_ci",
 ]
