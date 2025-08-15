@@ -18,6 +18,7 @@ permissions:
 env:
   DAGGER_VERSION: 0.18.14
 
+# Just a test comment
 jobs:
   pre-commit:
     name: pre-commit
@@ -26,8 +27,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5.0.0
 
-      - name: Run function pch
+      - name: Run build module
         uses: dagger/dagger-for-github@8.0.0
         with:
+          version: ${{ env.DAGGER_VERSION }}
           verb: call
-          args: --ref ${{ github.ref }} build
+          # This should be the one we use
+          # args: --ref ${{ github.ref }} build
+          args: build
