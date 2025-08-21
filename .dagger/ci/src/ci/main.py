@@ -17,7 +17,7 @@ class Ci:
             .with_mounted_directory("/app", self.source)
             .with_workdir("/app")
             .with_exec(["sh", "-c", "apk update && apk add git"])
-            .with_exec(["sh", "-c", "uv sync --project repermon --active"])
+            .with_exec(["sh", "-c", "uv sync --project repermon"])
             .with_exec(["sh", "-c", "source .venv/bin/activate"])
             .with_exec(["sh", "-c", ".venv/bin/pre-commit run --all-files"])
             .stdout()

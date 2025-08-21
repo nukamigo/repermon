@@ -11,7 +11,7 @@
   ],
   "shell": {
     "init_hook": [
-      "uv sync --project repermon --active",
+      "uv sync --project repermon --all-extras",
       "source .venv/bin/activate",
       "alias pch='pre-commit run --all-files'",
     ],
