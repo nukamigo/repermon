@@ -16,7 +16,7 @@ permissions:
   pull-requests: write
 
 env:
-  DAGGER_VERSION: 0.18.14
+  DAGGER_VERSION: 0.18.16
 
 # Just a test comment
 jobs:
