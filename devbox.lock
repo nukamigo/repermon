@@ -53,13 +53,13 @@
       "last_modified": "2025-04-13T09:22:33Z",
       "resolved": "github:NixOS/nixpkgs/18dd725c29603f582cf1900e0d25f9f1063dbf11?lastModified=1744536153&narHash=sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg%2FN38%3D"
     },
-    "github:dagger/nix/81b99dbe1176d4b9842604ec8d64e4ee803dd851#packages.x86_64-linux.dagger": {
+    "github:dagger/nix/126d68cb0752beec6be3975209dad29c05169cfd#packages.x86_64-linux.container-use": {
       "last_modified": "1970-01-01T00:00:00Z",
-      "resolved": "github:dagger/nix/81b99dbe1176d4b9842604ec8d64e4ee803dd851#packages.x86_64-linux.dagger"
+      "resolved": "github:dagger/nix/126d68cb0752beec6be3975209dad29c05169cfd#packages.x86_64-linux.container-use"
     },
-    "github:dagger/nix/8f5f6fd98e4ceef9e1d66b40f1db2204315c192e#packages.x86_64-linux.container-use": {
+    "github:dagger/nix/34f2fb9dae0f316a1b13633b043fbafadd11ef83#packages.x86_64-linux.dagger": {
       "last_modified": "1970-01-01T00:00:00Z",
-      "resolved": "github:dagger/nix/8f5f6fd98e4ceef9e1d66b40f1db2204315c192e#packages.x86_64-linux.container-use"
+      "resolved": "github:dagger/nix/34f2fb9dae0f316a1b13633b043fbafadd11ef83#packages.x86_64-linux.dagger"
     },
     "jq@1.7.1": {
       "last_modified": "2025-06-18T03:01:18Z",

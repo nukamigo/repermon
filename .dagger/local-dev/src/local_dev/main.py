@@ -8,6 +8,11 @@ class LocalDev:
     def local_dev(
         self,
     ) -> dagger.Service:
+        """Spin containers running elasticsearch and kibana
+
+        Elasticsearch available at http://localhost:9200
+        Kibana available at http://localhost:5601
+        """
         elasticsearch_service = (
             dag.container()
             .from_("docker.elastic.co/elasticsearch/elasticsearch:9.1.1")
