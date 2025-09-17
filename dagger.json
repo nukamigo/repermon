@@ -1,0 +1,22 @@
+{
+  "name": "build_ci",
+  "engineVersion": "v0.18.16",
+  "sdk": {
+    "source": "python"
+  },
+  "dependencies": [
+    {
+      "name": "ci",
+      "source": ".dagger/ci"
+    },
+    {
+      "name": "kubernetes",
+      "source": ".dagger/kubernetes"
+    },
+    {
+      "name": "local-dev",
+      "source": ".dagger/local-dev"
+    }
+  ],
+  "source": ".dagger/build_ci"
+}
