@@ -1,4 +1,5 @@
-"""Spin a kubernetes cluster locallly
+"""
+Spin a kubernetes cluster locallly
 
 Cluster available at http://localhost:6443
 """

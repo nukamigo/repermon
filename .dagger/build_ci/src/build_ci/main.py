@@ -48,3 +48,23 @@ class BuildCi:
     def kns(self) -> dagger.Container:
         """Returns a k9s container with the created cluster"""
         return dag.kubernetes().kns_server()
+
+    @function
+    def get_config(self) -> dagger.File:
+        """Returns the kubeconfig for the created cluster"""
+        return dag.kubernetes().get_config()
+
+    @function
+    async def test_manifests(self) -> str:
+        """Tests the manifests in the source directory"""
+        await self.cluster().start()
+        kubeconfig = self.get_config()
+        return (
+            dag.container()
+            .from_("bitnami/kubectl:latest")
+            .with_mounted_directory("/manifests", self.source)
+            .with_mounted_file("/kubeconfig", kubeconfig)
+            .with_env_variable("KUBECONFIG", "/kubeconfig")
+            .with_exec(["kubectl", "apply", "-f", "/manifests"])
+            .as_service()
+        )
