@@ -55,16 +55,18 @@ class BuildCi:
         return dag.kubernetes().get_config()
 
     @function
-    async def test_manifests(self) -> str:
+    async def test_manifests(self) -> dagger.Service:
         """Tests the manifests in the source directory"""
         await self.cluster().start()
         kubeconfig = self.get_config()
         return (
             dag.container()
-            .from_("bitnami/kubectl:latest")
-            .with_mounted_directory("/manifests", self.source)
+            .from_("alpine/kubectl:1.34.1")
+            .with_mounted_directory("/manifests", self.source.directory("kubernetes"))
             .with_mounted_file("/kubeconfig", kubeconfig)
             .with_env_variable("KUBECONFIG", "/kubeconfig")
+            .with_exec(["chown", "1001:0", "/kubeconfig"])
             .with_exec(["kubectl", "apply", "-f", "/manifests"])
+            # .with_exposed_port(6443)
             .as_service()
         )

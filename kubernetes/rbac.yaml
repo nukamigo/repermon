@@ -1,15 +1,21 @@
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-monitor
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cicd-operator-sa
-  namespace: AIMonitor
+  namespace: ai-monitor
 ---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: cicd-operator-role
 rules:
-  - apiGroups: ["perf.my-org.io"]
+  - apiGroups: ["repermon.io"]
     resources: ["cicdmonitors", "cicdmonitors/status"]
     verbs: ["get", "list", "watch", "update", "patch"]
   - apiGroups: [""]
@@ -26,7 +32,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: cicd-operator-sa
-    namespace: AIMonitor
+    namespace: ai-monitor
 roleRef:
   kind: ClusterRole
   name: cicd-operator-role
