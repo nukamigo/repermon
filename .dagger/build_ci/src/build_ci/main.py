@@ -48,3 +48,27 @@ class BuildCi:
     def kns(self) -> dagger.Container:
         """Returns a k9s container with the created cluster"""
         return dag.kubernetes().kns_server()
+
+    @function
+    def get_config(self) -> dagger.File:
+        """Returns the kubeconfig for the created cluster"""
+        return dag.kubernetes().get_config()
+
+    @function
+    async def test_manifest(self) -> dagger.Service:
+        cluster = await self.cluster().start()
+        self.__manifests_service()
+        return dag.proxy().with_service(cluster, "cluster", 8080, 6443).service()
+
+    def __manifests_service(self) -> dagger.Container:
+        """Tests the manifests in the source directory"""
+        kubeconfig = self.get_config()
+        return (
+            dag.container()
+            .from_("alpine/kubectl:1.34.1")
+            .with_mounted_directory("/manifests", self.source.directory("kubernetes"))
+            .with_mounted_file("/kubeconfig", kubeconfig)
+            .with_env_variable("KUBECONFIG", "/kubeconfig")
+            .with_exec(["chown", "1001:0", "/kubeconfig"])
+            .with_exec(["kubectl", "apply", "-f", "/manifests"])
+        )
