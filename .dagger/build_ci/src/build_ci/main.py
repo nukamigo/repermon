@@ -55,9 +55,13 @@ class BuildCi:
         return dag.kubernetes().get_config()
 
     @function
-    async def test_manifests(self) -> dagger.Service:
+    async def test_manifest(self) -> dagger.Service:
+        cluster = await self.cluster().start()
+        self.__manifests_service()
+        return dag.proxy().with_service(cluster, "cluster", 8080, 6443).service()
+
+    def __manifests_service(self) -> dagger.Container:
         """Tests the manifests in the source directory"""
-        await self.cluster().start()
         kubeconfig = self.get_config()
         return (
             dag.container()
@@ -67,6 +71,4 @@ class BuildCi:
             .with_env_variable("KUBECONFIG", "/kubeconfig")
             .with_exec(["chown", "1001:0", "/kubeconfig"])
             .with_exec(["kubectl", "apply", "-f", "/manifests"])
-            # .with_exposed_port(6443)
-            .as_service()
         )

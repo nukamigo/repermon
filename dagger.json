@@ -16,6 +16,11 @@
     {
       "name": "local-dev",
       "source": ".dagger/local-dev"
+    },
+    {
+      "name": "proxy",
+      "source": "github.com/kpenfound/dagger-modules/proxy@proxy/v0.2.5",
+      "pin": "3e9129a119151eb122e5fe380bd2d4313d8fc001"
     }
   ],
   "source": ".dagger/build_ci"
