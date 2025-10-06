@@ -35,7 +35,7 @@ class BuildCi:
             self.source = source
 
     @function
-    async def build(self) -> str:
+    async def pre_commit(self) -> str:
         """Runs pre-commit for a given source (git or local)"""
         return await dag.ci(self.source).pch()
 
@@ -55,13 +55,13 @@ class BuildCi:
         return dag.kubernetes().get_config()
 
     @function
-    async def test_manifest(self) -> dagger.Service:
-        cluster = await self.cluster().start()
-        self.__manifests_service()
-        return dag.proxy().with_service(cluster, "cluster", 8080, 6443).service()
-
-    def __manifests_service(self) -> dagger.Container:
+    async def test_cluster(self) -> str:
         """Tests the manifests in the source directory"""
+        await self.cluster().start()
+        output = await self.__test_manifests()
+        return output
+
+    def __test_manifests(self) -> str:
         kubeconfig = self.get_config()
         return (
             dag.container()
@@ -71,4 +71,5 @@ class BuildCi:
             .with_env_variable("KUBECONFIG", "/kubeconfig")
             .with_exec(["chown", "1001:0", "/kubeconfig"])
             .with_exec(["kubectl", "apply", "-f", "/manifests"])
+            .combined_output()
         )

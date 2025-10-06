@@ -57,9 +57,9 @@
       "last_modified": "1970-01-01T00:00:00Z",
       "resolved": "github:dagger/nix/126d68cb0752beec6be3975209dad29c05169cfd#packages.x86_64-linux.container-use"
     },
-    "github:dagger/nix/34f2fb9dae0f316a1b13633b043fbafadd11ef83#packages.x86_64-linux.dagger": {
+    "github:dagger/nix/6215bc1f0c3e6337557cd2660bc81835431fc6f2#packages.x86_64-linux.dagger": {
       "last_modified": "1970-01-01T00:00:00Z",
-      "resolved": "github:dagger/nix/34f2fb9dae0f316a1b13633b043fbafadd11ef83#packages.x86_64-linux.dagger"
+      "resolved": "github:dagger/nix/6215bc1f0c3e6337557cd2660bc81835431fc6f2#packages.x86_64-linux.dagger"
     },
     "jq@1.7.1": {
       "last_modified": "2025-06-18T03:01:18Z",
