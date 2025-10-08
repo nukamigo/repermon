@@ -13,6 +13,7 @@
     "init_hook": [
       "uv sync --project repermon --all-extras",
       "source .venv/bin/activate",
+      "eval \"$(dagger completion bash)\"",
       "pre-commit install",
       "alias pch='pre-commit run --all-files'"
     ]
