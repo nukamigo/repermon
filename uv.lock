@@ -205,7 +205,7 @@ wheels = [
 
 [[package]]
 name = "dagger-io"
-version = "0.18.16"
+version = "0.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -220,9 +220,9 @@ dependencies = [
     { name = "rich" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/81/67/03fbc8198b37aa9cae5f9bef69ecd4188a8214278ebfc9f241d35f594950/dagger_io-0.18.16.tar.gz", hash = "sha256:c487364f27b44202428bbcbe9bbd9a1a94cbdc2f19b5a043362ffe5f8a2debf3", size = 97865, upload-time = "2025-08-19T14:00:53.985Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/87/8c/566f6592ce4bd07b60f8c4b0a22e37e2dbd61fc59b2830c0152ce6e4fa65/dagger_io-0.19.0.tar.gz", hash = "sha256:e5e2adcaaf0bfe12dd119d0f15853132e273788c0dc925b98aec1b7c937b06d8", size = 103718, upload-time = "2025-09-30T12:17:40.528Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/4d/7e3a7be7c4c61cfdcae14f9edc49b457e0df09198520b2bb00dd766c0039/dagger_io-0.18.16-py3-none-any.whl", hash = "sha256:138f8910427e7bdc4c2658faea0c633175713c5e8a512714fefd2f04cb04633e", size = 89093, upload-time = "2025-08-19T14:00:52.945Z" },
+    { url = "https://files.pythonhosted.org/packages/ff/d6/b3828b208d788df0f857517d9ff4610b9ac014be883f7cc383823bc86e0a/dagger_io-0.19.0-py3-none-any.whl", hash = "sha256:fa05ddd10ff622f54c3c929ea47a8b90f205305bd55a94f0794a05c5243c01e7", size = 94837, upload-time = "2025-09-30T12:17:39.167Z" },
 ]
 
 [[package]]
@@ -356,7 +356,7 @@ wheels = [
 
 [[package]]
 name = "gql"
-version = "3.5.3"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -364,9 +364,9 @@ dependencies = [
     { name = "graphql-core" },
     { name = "yarl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/ed/44ffd30b06b3afc8274ee2f38c3c1b61fe4740bf03d92083e43d2c17ac77/gql-3.5.3.tar.gz", hash = "sha256:393b8c049d58e0d2f5461b9d738a2b5f904186a40395500b4a84dd092d56e42b", size = 180504, upload-time = "2025-05-20T12:34:08.954Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/9f/cf224a88ed71eb223b7aa0b9ff0aa10d7ecc9a4acdca2279eb046c26d5dc/gql-4.0.0.tar.gz", hash = "sha256:f22980844eb6a7c0266ffc70f111b9c7e7c7c13da38c3b439afc7eab3d7c9c8e", size = 215644, upload-time = "2025-08-17T14:32:35.397Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cb/50/2f4e99b216821ac921dbebf91c644ba95818f5d07857acadee17220221f3/gql-3.5.3-py2.py3-none-any.whl", hash = "sha256:e1fcbde2893fcafdd28114ece87ff47f1cc339a31db271fc4e1d528f5a1d4fbc", size = 74348, upload-time = "2025-05-20T12:34:07.687Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/94/30bbd09e8d45339fa77a48f5778d74d47e9242c11b3cd1093b3d994770a5/gql-4.0.0-py3-none-any.whl", hash = "sha256:f3beed7c531218eb24d97cb7df031b4a84fdb462f4a2beb86e2633d395937479", size = 89900, upload-time = "2025-08-17T14:32:34.029Z" },
 ]
 
 [package.optional-dependencies]
