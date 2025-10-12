@@ -35,7 +35,7 @@ class BuildCi:
             self.source = source
 
     @function
-    async def build(self) -> str:
+    async def pre_commit(self) -> str:
         """Runs pre-commit for a given source (git or local)"""
         return await dag.ci(self.source).pch()
 
@@ -48,3 +48,28 @@ class BuildCi:
     def kns(self) -> dagger.Container:
         """Returns a k9s container with the created cluster"""
         return dag.kubernetes().kns_server()
+
+    @function
+    def get_config(self) -> dagger.File:
+        """Returns the kubeconfig for the created cluster"""
+        return dag.kubernetes().get_config()
+
+    @function
+    async def test_cluster(self) -> str:
+        """Tests the manifests in the source directory"""
+        await self.cluster().start()
+        output = await self.__test_manifests()
+        return output
+
+    def __test_manifests(self) -> str:
+        kubeconfig = self.get_config()
+        return (
+            dag.container()
+            .from_("alpine/kubectl:1.34.1")
+            .with_mounted_directory("/manifests", self.source.directory("kubernetes"))
+            .with_mounted_file("/kubeconfig", kubeconfig)
+            .with_env_variable("KUBECONFIG", "/kubeconfig")
+            .with_exec(["chown", "1001:0", "/kubeconfig"])
+            .with_exec(["kubectl", "apply", "-f", "/manifests"])
+            .combined_output()
+        )

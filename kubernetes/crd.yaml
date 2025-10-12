@@ -1,0 +1,68 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: cicdmonitors.perf.my-org.io
+spec:
+  group: perf.my-org.io
+  scope: Namespaced
+  names:
+    plural: cicdmonitors
+    singular: cicdmonitor
+    kind: CiCdMonitor
+    shortNames:
+      - cicdm
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              description: "The desired state of the CiCdMonitor."
+              required:
+                - repository
+                - esIndex
+                - esCredentialsSecretName
+              properties:
+                repository:
+                  type: string
+                  description: "The GitHub repository to monitor (e.g., 'owner/repo')."
+                pollInterval:
+                  type: string
+                  description: "How often to poll for new workflow runs (e.g., '5m', '1h')."
+                  default: "10m"
+                esIndex:
+                  type: string
+                  description: "The Elasticsearch index where metrics will be stored."
+                esCredentialsSecretName:
+                  type: string
+                  description: "The name of the Kubernetes secret containing Elasticsearch credentials."
+            status:
+              type: object
+              description: "The observed state of the CiCdMonitor, managed by the operator."
+              x-kubernetes-preserve-unknown-fields: true
+              properties:
+                lastSyncTime:
+                  type: string
+                  format: date-time
+                totalRunsProcessed:
+                  type: integer
+                lastRunStatus:
+                  type: string
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      status:
+                        type: string
+                      lastTransitionTime:
+                        type: string
+                        format: date-time
+                      message:
+                        type: string
