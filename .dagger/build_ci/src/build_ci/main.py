@@ -73,3 +73,17 @@ class BuildCi:
             .with_exec(["kubectl", "apply", "-f", "/manifests"])
             .combined_output()
         )
+
+    @function
+    def build_container(self) -> dagger.Container:
+        """Builds the container for the source directory"""
+        return (
+            dag.container()
+            .from_("ghcr.io/astral-sh/uv:python3.12-alpine")
+            .with_mounted_directory("/app", self.source)
+            .with_workdir("/app")
+            .with_exec(["sh", "-c", "apk update"])
+            .with_exec(["sh", "-c", "uv sync --project repermon"])
+            .with_exec(["sh", "-c", "source .venv/bin/activate"])
+            .with_entrypoint(["kopf", "run", "/app/operator.py"])
+        )
