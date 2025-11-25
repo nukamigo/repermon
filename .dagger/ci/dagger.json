@@ -1,7 +1,8 @@
 {
   "name": "ci",
-  "engineVersion": "v0.19.1",
+  "engineVersion": "v0.19.7",
   "sdk": {
     "source": "python"
-  }
+  },
+  "disableDefaultFunctionCaching": true
 }

@@ -1,6 +1,6 @@
 {
   "name": "build_ci",
-  "engineVersion": "v0.19.1",
+  "engineVersion": "v0.19.7",
   "sdk": {
     "source": "python"
   },
@@ -23,5 +23,6 @@
       "pin": "3e9129a119151eb122e5fe380bd2d4313d8fc001"
     }
   ],
-  "source": ".dagger/build_ci"
+  "source": ".dagger/build_ci",
+  "disableDefaultFunctionCaching": true
 }
