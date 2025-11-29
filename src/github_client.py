@@ -31,26 +31,47 @@ def get_last_workflow_runs(repo_name: str, token: str):
         owner {
           login
         }
-        defaultBranchRef {
-          target {
-            ... on Commit {
-              history(first: 50) {
-                nodes {
-                  checkSuites(first: 20) {
-                    nodes {
-                      workflowRun {
+        refs(refPrefix: "refs/heads/", first: 100) {
+          nodes {
+            name
+            target {
+              ... on Commit {
+                history(first: 10) {
+                  nodes {
+                    oid
+                    messageHeadline
+                    author {
+                      name
+                      user {
+                        login
+                      }
+                    }
+                    committedDate
+                    checkSuites(first: 20) {
+                      nodes {
                         id
-                        databaseId
-                        event
-                        workflow {
-                          name
+                        conclusion
+                        status
+                        workflowRun {
+                          id
+                          databaseId
+                          runNumber
+                          event
+                          workflow {
+                            name
+                          }
+                          createdAt
+                          url
                         }
-                        createdAt
-                        updatedAt
-                        url
-                        checkSuite {
-                          conclusion
-                          status
+                        checkRuns(first: 10) {
+                          totalCount
+                          nodes {
+                            name
+                            conclusion
+                            status
+                            startedAt
+                            completedAt
+                          }
                         }
                       }
                     }
@@ -87,30 +108,64 @@ def get_last_workflow_runs(repo_name: str, token: str):
         logger.error("Repository not available")
         raise GitHubClientError("Repository not available")
 
-    default_branch = repository.get("defaultBranchRef", {})
-    target = default_branch.get("target", {})
-    history = target.get("history", {})
-    commits = history.get("nodes", [])
+    refs = repository.get("refs", {}).get("nodes", [])
 
     workflow_runs = []
     seen_ids = set()
 
-    for commit in commits:
-        check_suites = commit.get("checkSuites", {}).get("nodes", [])
-        for suite in check_suites:
-            workflow_run = suite.get("workflowRun")
-            if workflow_run and workflow_run.get("id") not in seen_ids:
-                seen_ids.add(workflow_run.get("id"))
-                workflow_runs.append(workflow_run)
+    for ref in refs:
+        branch_name = ref.get("name")
+        target = ref.get("target", {})
+        history = target.get("history", {})
+        commits = history.get("nodes", [])
 
-                if len(workflow_runs) >= 10:
-                    break
+        for commit in commits:
+            commit_info = {
+                "sha": commit.get("oid"),
+                "message": commit.get("messageHeadline"),
+                "author": commit.get("author", {}).get("name"),
+                "author_login": (commit.get("author", {}).get("user") or {}).get(
+                    "login"
+                ),
+                "date": commit.get("committedDate"),
+            }
+
+            check_suites = commit.get("checkSuites", {}).get("nodes", [])
+            for suite in check_suites:
+                workflow_run = suite.get("workflowRun")
+                if workflow_run and workflow_run.get("id") not in seen_ids:
+                    seen_ids.add(workflow_run.get("id"))
+
+                    # Build simplified workflow run with only commit and jobs info
+                    simplified_run = {
+                        "id": workflow_run.get("id"),
+                        "run_number": workflow_run.get("runNumber"),
+                        "workflow_name": (workflow_run.get("workflow") or {}).get(
+                            "name"
+                        ),
+                        "event": workflow_run.get("event"),
+                        "conclusion": suite.get("conclusion"),
+                        "status": suite.get("status"),
+                        "created_at": workflow_run.get("createdAt"),
+                        "url": workflow_run.get("url"),
+                        "branch": branch_name,
+                        "commit": commit_info,
+                        "jobs": suite.get("checkRuns", {}).get("nodes", []),
+                        "jobs_count": suite.get("checkRuns", {}).get("totalCount", 0),
+                    }
+
+                    workflow_runs.append(simplified_run)
+
+                    if len(workflow_runs) >= 10:
+                        break
+
+            if len(workflow_runs) >= 10:
+                break
 
         if len(workflow_runs) >= 10:
             break
 
-    workflow_runs.sort(key=lambda x: x.get("createdAt", ""), reverse=True)
+    workflow_runs.sort(key=lambda x: x.get("created_at", ""), reverse=True)
     workflow_runs = workflow_runs[:10]
 
-    logger.info(f"Found {len(workflow_runs)} workflow runs.")
     return workflow_runs
