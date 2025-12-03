@@ -2,7 +2,7 @@ import argparse
 import json
 import os
 import sys
-from src.github_client import GitHubClientError, get_last_workflow_runs
+from src.github_client import GitHubClientError, WorkflowRuns
 from src.utils.logger import setup_logger
 from src.utils.utils import format_json_output
 
@@ -27,6 +27,7 @@ def parse_args():
 def main():
     parsed_args = parse_args()
     token = parsed_args.token or os.getenv("GITHUB_TOKEN")
+    workflow_runs = WorkflowRuns(parsed_args.repo, token)
 
     if not token:
         logger.error(
@@ -35,7 +36,7 @@ def main():
         return 1
 
     try:
-        runs = get_last_workflow_runs(parsed_args.repo, token)
+        runs = workflow_runs.get_last_workflow_runs()
     except GitHubClientError as exc:
         logger.error(f"Error: {exc}")
         return 1

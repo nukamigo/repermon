@@ -9,8 +9,9 @@ dependencies = [
   "pathspec==0.12.1",
   "typing-extensions==4.14.1",
   "kopf==1.38.0",
-  "requests==2.32.4",
   "elasticsearch==9.1.0",
+  "pytest==9.0.1",
+  "requests==2.32.5",
   "dagger-io",
   "pre-commit>=4.2.0",
 ]
