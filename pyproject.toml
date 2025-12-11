@@ -14,7 +14,11 @@ dependencies = [
   "requests==2.32.5",
   "dagger-io",
   "pre-commit>=4.2.0",
+  "pytest-cov>=7.0.0",
 ]
+
+[tool.pytest.ini_options]
+addopts = ["--cov=.", "--cov-report=term-missing", "--cov-report=xml"]
 
 [dependency-groups]
 dev = [
