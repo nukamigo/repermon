@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Annotated
+from typing import Annotated, Optional
 import dagger
 from dagger import DefaultPath, Doc, dag, function, object_type
 
@@ -9,15 +9,15 @@ from dagger import DefaultPath, Doc, dag, function, object_type
 class BuildCi:
     """^Dagger build module"""
 
-    source: dagger.Directory
+    source: Annotated[
+        Optional[dagger.Directory],
+        DefaultPath("/"),
+        Doc("The source directory to run the pre-commit"),
+    ]
 
     def __init__(
         self,
-        source: Annotated[
-            dagger.Directory,
-            DefaultPath("/"),
-            Doc("The source directory to run the pre-commit"),
-        ],
+        source: Optional[dagger.Directory],
         commit: Annotated[
             str,
             Doc(
