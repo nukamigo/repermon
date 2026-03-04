@@ -15,7 +15,7 @@ permissions:
   pull-requests: write
 
 env:
-  DAGGER_VERSION: 0.19.7
+  DAGGER_VERSION: 0.20.0
 
 jobs:
   pre-commit:
