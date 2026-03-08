@@ -7,15 +7,15 @@
   "dependencies": [
     {
       "name": "ci",
-      "source": ".dagger/ci"
+      "source": "src/ci"
     },
     {
       "name": "kubernetes",
-      "source": ".dagger/kubernetes"
+      "source": "src/kubernetes"
     },
     {
       "name": "local-dev",
-      "source": ".dagger/local-dev"
+      "source": "src/local-dev"
     },
     {
       "name": "proxy",
