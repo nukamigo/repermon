@@ -22,6 +22,7 @@ class LocalDev:
             .with_exposed_port(9200)
             .as_service()
         )
+        elasticsearch_service
         kibana_service = (
             dag.container()
             .from_("docker.elastic.co/kibana/kibana:9.1.0")
