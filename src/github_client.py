@@ -1,6 +1,7 @@
 from typing import List
 import requests
 from src.utils.logger import setup_logger
+from src.utils.graphql.loader import load_query
 
 GITHUB_API_URL = "https://api.github.com/graphql"
 logger = setup_logger(__name__)
@@ -30,66 +31,7 @@ class WorkflowRuns:
 
         headers = {"Authorization": f"Bearer {self.token}"}
 
-        query = """
-        query GetWorkflowRuns($owner: String!, $name: String!) {
-        repository(owner: $owner, name: $name) {
-            name
-            owner {
-            login
-            }
-            refs(refPrefix: "refs/heads/", first: 100) {
-            nodes {
-                name
-                target {
-                ... on Commit {
-                    history(first: 10) {
-                    nodes {
-                        oid
-                        messageHeadline
-                        author {
-                        name
-                        user {
-                            login
-                        }
-                        }
-                        committedDate
-                        checkSuites(first: 20) {
-                        nodes {
-                            id
-                            conclusion
-                            status
-                            workflowRun {
-                            id
-                            databaseId
-                            runNumber
-                            event
-                            workflow {
-                                name
-                            }
-                            createdAt
-                            url
-                            }
-                            checkRuns(first: 10) {
-                            totalCount
-                            nodes {
-                                name
-                                conclusion
-                                status
-                                startedAt
-                                completedAt
-                            }
-                            }
-                        }
-                        }
-                    }
-                    }
-                }
-                }
-            }
-            }
-        }
-        }
-        """
+        query = load_query("queries/get_workflow_run.graphql")
         variables = {"owner": owner, "name": name}
 
         try:
