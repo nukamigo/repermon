@@ -6,7 +6,8 @@ from dagger import dag, function, object_type
 class Ci:
     """^Dagger module for CI checks"""
 
-    source: dagger.Directory
+    def __init__(self, source: dagger.Directory) -> None:
+        self.source = source
 
     @function
     async def pch(self) -> str:
