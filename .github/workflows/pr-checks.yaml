@@ -8,7 +8,6 @@ on:
     types:
       - synchronize
       - reopened
-      - ready_for_review
 
 permissions:
   contents: read

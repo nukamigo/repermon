@@ -23,4 +23,4 @@ dev = [
 
 # please don't delete need it for neovim....
 # [tool.uv.sources]
-# dagger-io = { path = ".dagger/build_ci/sdk" }
+# dagger-io = { path = ".dagger/sdk" }

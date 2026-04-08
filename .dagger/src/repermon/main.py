@@ -2,12 +2,14 @@ from dataclasses import dataclass
 from typing import Annotated, Optional
 import dagger
 from dagger import DefaultPath, Doc, dag, function, object_type
+from .ci import Ci
+from .kubernetes import Kubernetes as kubernetes
 
 
 @dataclass
 @object_type
-class BuildCi:
-    """^Dagger build module"""
+class Repermon:
+    """Dagger build module"""
 
     source: Annotated[
         Optional[dagger.Directory],
@@ -34,25 +36,28 @@ class BuildCi:
         else:
             self.source = source
 
+    def create_ci(self) -> Ci:
+        return Ci(self.source)
+
     @function
     async def pre_commit(self) -> str:
         """Runs pre-commit for a given source (git or local)"""
-        return await dag.ci(self.source).pch()
+        return await self.create_ci().pch()
 
     @function
     def cluster(self) -> dagger.Service:
         """Returns a service with the created cluster"""
-        return dag.kubernetes().service()
+        return kubernetes().service()
 
     @function
     def kns(self) -> dagger.Container:
         """Returns a k9s container with the created cluster"""
-        return dag.kubernetes().kns_server()
+        return kubernetes().kns_server()
 
     @function
     def get_config(self) -> dagger.File:
         """Returns the kubeconfig for the created cluster"""
-        return dag.kubernetes().get_config()
+        return kubernetes().get_config()
 
     @function
     async def test_cluster(self) -> str:

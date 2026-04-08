@@ -1,21 +1,14 @@
 {
-  "name": "build_ci",
+  "name": "repermon",
   "engineVersion": "v0.20.0",
   "sdk": {
     "source": "python"
   },
   "dependencies": [
     {
-      "name": "ci",
-      "source": ".dagger/ci"
-    },
-    {
-      "name": "kubernetes",
-      "source": ".dagger/kubernetes"
-    },
-    {
-      "name": "local-dev",
-      "source": ".dagger/local-dev"
+      "name": "k3s",
+      "source": "github.com/marcosnils/daggerverse/k3s@k3s/v0.1.10",
+      "pin": "28eea1fcf3b6ecb38a628186107760acd717442f"
     },
     {
       "name": "proxy",
@@ -23,6 +16,5 @@
       "pin": "3e9129a119151eb122e5fe380bd2d4313d8fc001"
     }
   ],
-  "source": ".dagger/build_ci",
-  "disableDefaultFunctionCaching": true
+  "source": ".dagger"
 }
