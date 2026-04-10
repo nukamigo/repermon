@@ -1,7 +1,8 @@
-from typing import List
-import requests
+from typing import Any, List
+from gql import Client
 from src.utils.logger import setup_logger
 from src.utils.graphql.loader import load_query
+from gql.transport.requests import RequestsHTTPTransport
 
 GITHUB_API_URL = "https://api.github.com/graphql"
 logger = setup_logger(__name__)
@@ -16,7 +17,7 @@ class WorkflowRuns:
         self.repo_name = repo_name
         self.token = token
 
-    def get_last_workflow_runs(self) -> List[str]:
+    def get_last_workflow_runs(self) -> List[dict[str, Any]]:
         try:
             owner, name = self.repo_name.split("/", 1)
         except ValueError as exc:
@@ -30,28 +31,42 @@ class WorkflowRuns:
             raise GitHubClientError("GitHub API token must be provided.")
 
         headers = {"Authorization": f"Bearer {self.token}"}
+        variable_values = {"owner": owner, "name": name}
+        query_path = "queries/get_workflow_runs.graphql"
 
-        query = load_query("queries/get_workflow_run.graphql")
-        variables = {"owner": owner, "name": name}
+        data = self.__fetch_data(
+            query_path=query_path, headers=headers, variable_values=variable_values
+        )
 
-        try:
-            response = requests.post(
-                GITHUB_API_URL,
-                json={"query": query, "variables": variables},
-                headers=headers,
-                timeout=15,
-            )
-            response.raise_for_status()
-        except requests.RequestException as exc:
-            logger.error(f"Request error: {exc}")
-            raise GitHubClientError(f"Request error: {exc}") from exc
-
-        data = response.json()
         if "errors" in data:
             logger.error(f"GraphQL API request error: {data['errors']}")
             raise GitHubClientError(f"GraphQL API request error: {data['errors']}")
 
-        repository = data.get("data", {}).get("repository")
+        return self.__process_data(data)
+
+    def __fetch_data(
+        self, query_path: str, headers: dict[str, str], variable_values: dict[str, str]
+    ) -> dict[str, Any]:
+        query = load_query(query_path)
+        query.variable_values = variable_values
+
+        _transport = RequestsHTTPTransport(
+            url=GITHUB_API_URL,
+            headers=headers,
+            use_json=True,
+        )
+        client = Client(
+            transport=_transport,
+            fetch_schema_from_transport=True,
+        )
+
+        with client as session:
+            assert client.schema is not None
+
+            return session.execute(query)
+
+    def __process_data(self, data: dict[str, Any]) -> list[dict[str, Any]]:
+        repository = data.get("repository")
         if repository is None:
             logger.error("Repository not available")
             raise GitHubClientError("Repository not available")
@@ -105,16 +120,7 @@ class WorkflowRuns:
 
                         workflow_runs.append(simplified_run)
 
-                        if len(workflow_runs) >= 10:
-                            break
-
-                if len(workflow_runs) >= 10:
-                    break
-
-            if len(workflow_runs) >= 10:
-                break
-
         workflow_runs.sort(key=lambda x: x.get("created_at", ""), reverse=True)
-        workflow_runs = workflow_runs[:10]
+        # workflow_runs = workflow_runs[:10]
 
         return workflow_runs

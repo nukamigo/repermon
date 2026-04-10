@@ -16,7 +16,9 @@ dependencies = [
   "pre-commit>=4.2.0",
   "pytest-cov>=7.0.0",
   "pathlib>=1.0.1",
-  "gql>=4.0.0",
+  "gql[all,requests]>=4.0.0",
+  "debugpy>=1.8.20",
+  "dotenv>=0.9.9",
 ]
 
 [tool.pytest.ini_options]
