@@ -16,8 +16,8 @@ rules:
   - apiGroups: ["apps"]
     resources: ["deployments", "statefulsets", "replicasets"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  - apiGroups: ["example.com"]
-    resources: ["myresources", "myresources/status"]
+  - apiGroups: ["perf.nukamigo.io"]
+    resources: ["cicdmonitors", "cicdmonitors/status"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -54,7 +54,7 @@ spec:
       serviceAccountName: my-operator
       containers:
         - name: my-operator
-          image: my-registry/my-operator:latest
+          image: my-operator:latest
           imagePullPolicy: IfNotPresent
           command: ["/operator"]
           args: []

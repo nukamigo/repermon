@@ -90,5 +90,5 @@ class Repermon:
             .with_exec(["sh", "-c", "apk update"])
             .with_exec(["sh", "-c", "uv sync --project repermon"])
             .with_exec(["sh", "-c", "source .venv/bin/activate"])
-            .with_entrypoint(["kopf", "run", "/app/operator.py"])
+            .with_entrypoint(["kopf", "run", "/app/src/operator.py"])
         )
