@@ -19,6 +19,8 @@ dependencies = [
   "gql[all,requests]>=4.0.0",
   "debugpy>=1.8.20",
   "dotenv>=0.9.9",
+  "pytest-mock>=3.15.1",
+  "mock",
 ]
 
 [tool.pytest.ini_options]
@@ -28,6 +30,7 @@ addopts = [
     "-v",
 ]
 testpaths = ["tests"]
+mock_use_standalone_module = true
 
 [dependency-groups]
 dev = [

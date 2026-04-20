@@ -1,8 +1,10 @@
 from typing import Any, List
+
 from gql import Client
-from src.utils.logger import setup_logger
-from src.utils.graphql.loader import load_query
 from gql.transport.requests import RequestsHTTPTransport
+
+from src.utils.graphql.loader import load_query
+from src.utils.logger import setup_logger
 
 GITHUB_API_URL = "https://api.github.com/graphql"
 logger = setup_logger(__name__)
