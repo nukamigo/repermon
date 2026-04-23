@@ -123,6 +123,5 @@ class WorkflowRuns:
                         workflow_runs.append(simplified_run)
 
         workflow_runs.sort(key=lambda x: x.get("created_at", ""), reverse=True)
-        # workflow_runs = workflow_runs[:10]
 
         return workflow_runs

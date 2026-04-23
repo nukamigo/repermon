@@ -33,23 +33,17 @@ def main():
         logger.error(
             "GitHub token not provided. Use --token or set GITHUB_TOKEN environment variable."
         )
-        return 1
+        raise ValueError("GitHub token not provided.")
 
     try:
         runs = workflow_runs.get_last_workflow_runs()
     except GitHubClientError as exc:
         logger.error(f"Error: {exc}")
-        return 1
 
     if not runs:
         print(json.dumps({"total_runs": 0, "runs": []}, indent=2))
-        return 0
 
-    output = format_json_output(runs)
-
-    print(json.dumps(output, indent=2))
-
-    return 0
+    format_json_output(runs)
 
 
 if __name__ == "__main__":

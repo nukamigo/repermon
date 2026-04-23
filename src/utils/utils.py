@@ -3,7 +3,8 @@ import json
 
 
 class Utils:
-    def format_json_outputself(self, runs):
+    @staticmethod
+    def format_json_output(runs):
         """Format workflow runs as JSON."""
         output = {"total_runs": len(runs), "runs": []}
 
@@ -38,7 +39,7 @@ class Utils:
                         "status": job.get("status"),
                         "started_at": job.get("startedAt"),
                         "completed_at": job.get("completedAt"),
-                        "duration": self.__format_duration(
+                        "duration": Utils.__format_duration(
                             job.get("startedAt"), job.get("completedAt")
                         ),
                     }
@@ -50,7 +51,8 @@ class Utils:
 
         print(json.dumps(output, indent=2))
 
-    def __format_duration(self, started_at, completed_at):
+    @staticmethod
+    def __format_duration(started_at, completed_at):
         """
         Calculate duration between start and completion times.
 
@@ -80,5 +82,4 @@ class Utils:
             return "N/A"
 
 
-utils = Utils()
-format_json_output = utils.format_json_outputself
+format_json_output = Utils.format_json_output
