@@ -1,0 +1,10 @@
+type Repermon {
+  """
+  The source directory for the build
+  """
+  let source: Directory! @defaultPath(path: "/")
+
+  pub cluster: Container! {
+    kubeService.knsServer
+  }
+}
