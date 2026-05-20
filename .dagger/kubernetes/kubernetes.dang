@@ -1,0 +1,25 @@
+type KubeService {
+  """
+  Name of for the single node cluster (defaults to "test")
+  """
+  pub name: String! = "test"
+
+  pub kubeService: Service! {
+    let k3s_container = k3S(name: name)
+      .container
+      .withMountedCache("/var/lib/dagger", cacheVolume("varlibdagger"))
+
+    k3S(name: name)
+      .withContainer(k3s_container)
+      .server
+  }
+
+  pub getConfig: File! {
+    k3S(name: name).config(local: false)
+  }
+
+  pub knsServer: Container! {
+    kubeService.start
+    k3S(name: name).kns.terminal
+  }
+}

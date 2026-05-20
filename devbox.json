@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.0/.schema/devbox.schema.json",
   "packages": [
-    "github:dagger/nix/e11d4abe0d21295852d16ad4eef5f7c04d6cc8ca#packages.x86_64-linux.dagger",
+    "github:dagger/nix/873cc22ba46b73d4a6c1aa6c102ef3aabc736496#packages.x86_64-linux.dagger",
     "github:dagger/nix/126d68cb0752beec6be3975209dad29c05169cfd#packages.x86_64-linux.container-use",
     "uv@0.7.19",
     "k9s@0.50.6",

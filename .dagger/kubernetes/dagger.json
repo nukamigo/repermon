@@ -1,0 +1,14 @@
+{
+  "name": "kube-service",
+  "engineVersion": "v0.20.8",
+  "sdk": {
+    "source": "dang"
+  },
+  "dependencies": [
+    {
+      "name": "k3s",
+      "source": "github.com/dagger/dagger/toolchains/helm-dev/k3s@v0.20.2",
+      "pin": "fdfcf990a3d571468ee53eaabdb9bd25aa47af37"
+    }
+  ]
+}
