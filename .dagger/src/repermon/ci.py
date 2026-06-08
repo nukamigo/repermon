@@ -14,9 +14,8 @@ class BuildContainer:
             .from_(image)
             .with_mounted_directory("/app", source)
             .with_workdir("/app")
-            .with_exec(["sh", "-c", "apk update"])
-            .with_exec(["sh", "-c", "uv sync --project repermon"])
-            .with_exec(["sh", "-c", "source .venv/bin/activate"])
+            .with_exec(["apk", "update"])
+            .with_exec(["uv", "sync", "--project", "repermon"])
         )
 
 
@@ -30,12 +29,10 @@ class Ci(BuildContainer):
     @function
     async def pch(self) -> str:
         """Runs pre-commit for a given source (git or local)"""
-        return (
-            await self.build_container(
-                "ghcr.io/astral-sh/uv:python3.12-alpine", self.source
-            )
-            .with_workdir("/app")
-            .with_exec(["sh", "-c", ".venv/bin/pre-commit run --all-files"])
+        return await (
+            self.build_container("ghcr.io/astral-sh/uv:python3.12-alpine", self.source)
+            .with_exec(["apk", "add", "--no-cache", "git"])
+            .with_exec(["uv", "run", "pre-commit", "run", "--all-files"])
             .stdout()
         )
 
