@@ -1,4 +1,9 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-monitor
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: repermon-operator

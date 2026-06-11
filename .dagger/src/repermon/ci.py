@@ -1,3 +1,5 @@
+from typing import Optional
+
 import dagger
 from dagger import dag, function, object_type
 
@@ -7,7 +9,11 @@ class BuildContainer:
     """^Dagger module for building the container"""
 
     @function
-    def build_container(self, image: str, source: dagger.Directory) -> dagger.Container:
+    def build_container(
+        self,
+        source: dagger.Directory,
+        image: Optional[str] = "ghcr.io/astral-sh/uv:python3.12-alpine",
+    ) -> dagger.Container:
         """Builds the container for the source directory"""
         return (
             dag.container()
@@ -30,7 +36,7 @@ class Ci(BuildContainer):
     async def pch(self) -> str:
         """Runs pre-commit for a given source (git or local)"""
         return await (
-            self.build_container("ghcr.io/astral-sh/uv:python3.12-alpine", self.source)
+            self.build_container(self.source)
             .with_exec(["apk", "add", "--no-cache", "git"])
             .with_exec(["uv", "run", "pre-commit", "run", "--all-files"])
             .stdout()
