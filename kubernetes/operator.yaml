@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ai-monitor
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: repermon-operator
+  namespace: ai-monitor
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: repermon-operator-role
+  namespace: ai-monitor
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "events"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets", "replicasets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["perf.nukamigo.io"]
+    resources: ["cicdmonitors", "cicdmonitors/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: repermon-operator-rolebinding
+  namespace: ai-monitor
+subjects:
+  - kind: ServiceAccount
+    name: repermon-operator
+    namespace: ai-monitor
+roleRef:
+  kind: Role
+  name: repermon-operator-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repermon-operator
+  namespace: ai-monitor
+  labels:
+    app: repermon-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repermon-operator
+  template:
+    metadata:
+      labels:
+        app: repermon-operator
+    spec:
+      serviceAccountName: repermon-operator
+      containers:
+        - name: repermon-operator
+          image: repermon-operator:latest
+          imagePullPolicy: IfNotPresent
+          command: ["/operator"]
+          args: []
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
