@@ -9,11 +9,28 @@ dependencies = [
   "pathspec==0.12.1",
   "typing-extensions==4.14.1",
   "kopf==1.38.0",
-  "requests==2.32.4",
   "elasticsearch==9.1.0",
+  "pytest==9.0.1",
+  "requests==2.32.5",
   "dagger-io",
   "pre-commit>=4.2.0",
+  "pytest-cov>=7.0.0",
+  "pathlib>=1.0.1",
+  "gql[all,requests]>=4.0.0",
+  "debugpy>=1.8.20",
+  "dotenv>=0.9.9",
+  "pytest-mock>=3.15.1",
+  "mock",
 ]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--cov=src",
+    "--cov-report=term-missing",
+    "-v",
+]
+testpaths = ["tests"]
+mock_use_standalone_module = true
 
 [dependency-groups]
 dev = [
